@@ -130,6 +130,8 @@ const EDGES = [
     edgeStyle: EdgeStyle.default
   }
 ];
+window.NODES = NODES;
+window.EDGES = EDGES;
 
 function Hello() {
   const { data, error, isLoading } = useSWR('http://localhost:8000/', fetcher)
@@ -147,7 +149,35 @@ function useHello () {
     console.log(isLoading);
 
   return {
-    user: data,
+    hello: data,
+    isLoading,
+    isError: error
+  }
+}
+
+function useNodes () {
+  const { data, error, isLoading } = useSWR('http://localhost:8000/nodes', fetcher)
+
+    console.log(data);
+    console.log(error);
+    console.log(isLoading);
+
+  return {
+    nodes: data,
+    isLoading,
+    isError: error
+  }
+}
+
+function useEdges () {
+  const { data, error, isLoading } = useSWR('http://localhost:8000/edges', fetcher)
+
+    console.log(data);
+    console.log(error);
+    console.log(isLoading);
+
+  return {
+    edges: data,
     isLoading,
     isError: error
   }
@@ -155,12 +185,15 @@ function useHello () {
 
 export const Blueprints: React.FC = () => {
   const [selectedIds, setSelectedIds] = React.useState<string[]>([]);
+  const { hello, isLoading, isError } = useHello();
+  const { nodes, isLoading, isError } = useNodes();
+  const { edges, isLoading, isError } = useEdges();
 
 
   const controller = React.useMemo(() => {
     const model: Model = {
-      nodes: NODES,
-      edges: EDGES,
+      nodes: nodes,
+      edges: edges,
       graph: {
         id: 'g1',
         type: 'graph',
@@ -179,9 +212,8 @@ export const Blueprints: React.FC = () => {
 
 
     return newController;
-  }, []);
+  }, [nodes, edges]);
 
-  const { hello, isLoading, isError } = useHello();
 
   return (
     <VisualizationProvider controller={controller}>
