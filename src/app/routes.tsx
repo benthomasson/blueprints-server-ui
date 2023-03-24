@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, RouteComponentProps, Switch, useLocation } from 'react-router-dom';
 import { Dashboard } from '@app/Dashboard/Dashboard';
-import { Blueprints } from '@app/Blueprints/Blueprints';
+import { Blueprints, GroupedGroupsStyles } from '@app/Blueprints/Blueprints';
 import { TopologyDemo } from '@app/TopologyDemo/TopologyDemo';
 import { Support } from '@app/Support/Support';
 import { GeneralSettings } from '@app/Settings/General/GeneralSettings';
@@ -35,6 +35,13 @@ const routes: AppRouteConfig[] = [
     label: 'Blueprints',
     path: '/',
     title: 'PatternFly Seed | Blueprints',
+  },
+  {
+    component: GroupedGroupsStyles,
+    exact: true,
+    label: 'Groups',
+    path: '/groups',
+    title: 'PatternFly Seed | Groups',
   },
   {
     component: TopologyDemo,

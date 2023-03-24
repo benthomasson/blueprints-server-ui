@@ -14,10 +14,33 @@ import {
   ModelKind,
   NodeShape,
   SELECTION_EVENT,
+    useComponentFactory,
+    useModel,
   Visualization,
   VisualizationProvider,
   VisualizationSurface
 } from '@patternfly/react-topology';
+import withTopologySetup from '../TopologyDemo/utils/withTopologySetup';
+import defaultComponentFactory from '../TopologyDemo/components/defaultComponentFactory';
+import stylesComponentFactory from '../TopologyDemo/components/stylesComponentFactory';
+ import { logos } from '../TopologyDemo/utils/logos';
+import {
+  AlternateTerminalTypes,
+  createBadgeNodes,
+  createGroupedGroupNodes,
+  createGroupNodes,
+  createNode,
+  createStatusNodeShapes,
+  createUnGroupedGroupNodes,
+  EDGE_ANIMATION_SPEED_COUNT,
+  EDGE_ANIMATION_SPEEDS,
+  EDGE_STYLE_COUNT,
+  EDGE_STYLES,
+  EDGE_TERMINAL_TYPES,
+  EDGE_TERMINAL_TYPES_COUNT,
+  RIGHT_LABEL_COLUMN_WIDTH,
+  STATUS_VALUES
+} from '../TopologyDemo/utils/styleUtils';
 
 import useSWR from 'swr'
 
@@ -222,3 +245,68 @@ export const Blueprints: React.FC = () => {
   );
 };
 
+
+export const GroupedGroupsStyles = withTopologySetup(() => {
+  useComponentFactory(defaultComponentFactory);
+  useComponentFactory(stylesComponentFactory);
+  const groupedGroupNodes: NodeModel[] = createGroupedGroupNodes('GroupedGroup');
+  const ungroupedGroupNodes: NodeModel[] = createUnGroupedGroupNodes('Group 1');
+
+  const groupNode = {
+    id: 'Group 1',
+    type: 'group',
+    label: 'Node Group Title',
+    children: ['GroupedGroup', ...ungroupedGroupNodes.map(n => n.id)],
+    group: true,
+    style: { padding: 17 },
+    data: {
+      badge: 'Label',
+      badgeColor: '#F2F0FC',
+      badgeTextColor: '#5752d1',
+      badgeBorderColor: '#CBC1FF',
+      collapsedWidth: 75,
+      collapsedHeight: 75,
+      showContextMenu: true,
+      labelIconClass: logos.get('icon-java')
+    }
+  };
+
+  const groupedGroupNodes2: NodeModel[] = createGroupedGroupNodes('GroupedGroup2', 500);
+  const ungroupedGroupNodes2: NodeModel[] = createUnGroupedGroupNodes('Group 2', 500);
+
+  const groupNode2 = {
+    id: 'Group 2',
+    type: 'group',
+    label: 'Node Group Title',
+    children: ['GroupedGroup2', ...ungroupedGroupNodes2.map(n => n.id)],
+    group: true,
+    style: { padding: 17 },
+    data: {
+      badge: 'Label',
+      badgeColor: '#F2F0FC',
+      badgeTextColor: '#5752d1',
+      badgeBorderColor: '#CBC1FF',
+      collapsedWidth: 75,
+      collapsedHeight: 75,
+      selected: true,
+      showContextMenu: true,
+      labelIconClass: logos.get('icon-jenkins')
+    }
+  };
+
+  useModel({
+    graph: {
+      id: 'g1',
+      type: 'graph'
+    },
+    nodes: [
+      ...groupedGroupNodes,
+      ...ungroupedGroupNodes,
+      groupNode,
+      ...groupedGroupNodes2,
+      ...ungroupedGroupNodes2,
+      groupNode2
+    ]
+  });
+  return null;
+});
