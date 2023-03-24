@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Route, RouteComponentProps, Switch, useLocation } from 'react-router-dom';
 import { Dashboard } from '@app/Dashboard/Dashboard';
 import { Blueprints } from '@app/Blueprints/Blueprints';
+import { TopologyDemo } from '@app/TopologyDemo/TopologyDemo';
 import { Support } from '@app/Support/Support';
 import { GeneralSettings } from '@app/Settings/General/GeneralSettings';
 import { ProfileSettings } from '@app/Settings/Profile/ProfileSettings';
@@ -34,6 +35,13 @@ const routes: AppRouteConfig[] = [
     label: 'Blueprints',
     path: '/',
     title: 'PatternFly Seed | Blueprints',
+  },
+  {
+    component: TopologyDemo,
+    exact: true,
+    label: 'TopologyDemo',
+    path: '/topologydemo',
+    title: 'PatternFly Seed | TopologyDemo',
   },
   {
     component: Support,
