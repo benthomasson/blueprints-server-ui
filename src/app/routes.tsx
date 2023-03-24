@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Route, RouteComponentProps, Switch, useLocation } from 'react-router-dom';
 import { Dashboard } from '@app/Dashboard/Dashboard';
+import { Blueprints } from '@app/Blueprints/Blueprints';
 import { Support } from '@app/Support/Support';
 import { GeneralSettings } from '@app/Settings/General/GeneralSettings';
 import { ProfileSettings } from '@app/Settings/Profile/ProfileSettings';
@@ -28,11 +29,11 @@ export type AppRouteConfig = IAppRoute | IAppRouteGroup;
 
 const routes: AppRouteConfig[] = [
   {
-    component: Dashboard,
+    component: Blueprints,
     exact: true,
-    label: 'Dashboard',
+    label: 'Blueprints',
     path: '/',
-    title: 'PatternFly Seed | Main Dashboard',
+    title: 'PatternFly Seed | Blueprints',
   },
   {
     component: Support,
